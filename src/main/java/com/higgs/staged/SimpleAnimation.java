@@ -2,68 +2,78 @@ package com.higgs.staged;
 
 import java.awt.image.BufferedImage;
 import java.util.Objects;
+import java.util.Optional;
 
-/**
- * @author Justin Hartmann (zadarimm@gmail.com)
- * @since 0.0.1
- * @version 0.0.1
- */
 public class SimpleAnimation implements Animation {
-    private int _smoothness = 1;
-    private int _smoothCount = 0;
+    private int smoothness = 1;
+    private int smoothCount = 0;
 
-    int _frame = 0;
+    int frame = 0;
 
-    protected BufferedImage[] _frames;
+    protected BufferedImage[] frames;
 
     public SimpleAnimation() { }
 
     public SimpleAnimation(final int smoothness, final BufferedImage... frames) {
-        setSmoothness(smoothness);
-        setFrames(frames);
+        this.setSmoothness(smoothness);
+        this.setFrames(frames);
     }
 
     public void setSmoothness(final int smoothness) {
-        _smoothness = smoothness;
+        this.smoothness = smoothness;
     }
 
     public int getSmoothness() {
-        return _smoothness;
+        return this.smoothness;
     }
 
+    @Override
     public void setFrames(final BufferedImage... frames) {
         Objects.requireNonNull(frames);
-        _frames = frames;
+        this.frames = frames;
     }
 
+    @Override
     public void nextFrame() {
-        if(_frames != null) {
-            _smoothCount++;
-            if(_smoothness != NO_TRANS) {
-                if(_smoothCount >= _smoothness) {
-                    incFrame(1);
-                    _smoothCount = 0;
+        if (this.frames != null) {
+            this.smoothCount++;
+            if (this.smoothness != Animation.NO_TRANS) {
+                if (this.smoothCount >= this.smoothness) {
+                    this.incFrame(1);
+                    this.smoothCount = 0;
                 }
             } else {
-                incFrame(1);
+                this.incFrame(1);
             }
         }
     }
 
     protected void incFrame(final int amount) {
-        if(_frame + amount >= _frames.length) {
-            _frame = 0;
+        if (this.frame + amount >= this.frames.length) {
+            this.frame = 0;
         } else {
-            _frame += amount;
+            this.frame += amount;
         }
     }
 
+    @Override
     public BufferedImage getFrame() {
-        return _frames[_frame];
+        return this.frames[this.frame];
     }
 
+    @Override
     public BufferedImage getFrameAndInc() {
-        nextFrame();
-        return getFrame();
+        this.nextFrame();
+        return this.getFrame();
+    }
+
+    @Override
+    public int getWidth() {
+        return Optional.ofNullable(this.getFrame()).map(BufferedImage::getWidth).orElse(-1);
+    }
+
+    @Override
+    public int getHeight() {
+        return Optional.ofNullable(this.getFrame()).map(BufferedImage::getHeight).orElse(-1);
     }
 }

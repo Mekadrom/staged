@@ -1,46 +1,41 @@
 package com.higgs.staged;
 
 import java.awt.image.BufferedImage;
-import java.util.Objects;
 
-/**
- * @author Justin Hartmann (zadarimm@gmail.com)
- * @since 0.0.1
- * @version 0.0.1
- */
 public class ComplexAnimation extends SimpleAnimation {
-    private int[] _smoothnesses;
-    private int[] _smoothnessCounters;
+    private int[] smoothnesses;
+    private final int[] smoothnessCounters;
 
     public ComplexAnimation(final int[] smoothnesses, final BufferedImage[] frames) {
-        if(frames.length != smoothnesses.length) {
+        if (frames.length != smoothnesses.length) {
             throw new IllegalArgumentException("Arrays must have the same length!");
         }
 
-        setFrames(frames);
-        setSmoothnesses(smoothnesses);
-        _smoothnessCounters = new int[smoothnesses.length];
+        this.setFrames(frames);
+        this.setSmoothnesses(smoothnesses);
+        this.smoothnessCounters = new int[smoothnesses.length];
 
         int i = 0;
-        while(i < _smoothnessCounters.length) _smoothnessCounters[i++] = 0;
+        while (i < this.smoothnessCounters.length) {
+            this.smoothnessCounters[i++] = 0;
+        }
     }
 
     public void setSmoothnesses(final int[] smoothnesses) {
-        Objects.requireNonNull(smoothnesses);
-        _smoothnesses = smoothnesses;
+        this.smoothnesses = smoothnesses;
     }
 
     @Override
     public void nextFrame() {
-        if(_frames != null) {
-            _smoothnessCounters[_frame]++;
-            if(_smoothnesses[_frame] != NO_TRANS) {
-                if(_smoothnessCounters[_frame] >= _smoothnesses[_frame]) {
-                    incFrame(1);
-                    _smoothnessCounters[_frame] = 0;
+        if (this.frames != null) {
+            this.smoothnessCounters[this.frame]++;
+            if (this.smoothnesses[this.frame] != Animation.NO_TRANS) {
+                if (this.smoothnessCounters[this.frame] >= this.smoothnesses[this.frame]) {
+                    this.incFrame(1);
+                    this.smoothnessCounters[this.frame] = 0;
                 }
             } else {
-                incFrame(1);
+                this.incFrame(1);
             }
         }
     }

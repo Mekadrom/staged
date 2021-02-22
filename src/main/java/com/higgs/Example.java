@@ -6,8 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Example {
-    private static final Dimension _dim = new Dimension(1366, 768);
+public final class Example {
+    private static final Dimension SIZE = new Dimension(1366, 768);
 
     public static void main(final String[] args) {
         final JFrame frame = new JFrame("Example Stage");
@@ -16,21 +16,21 @@ public class Example {
 
         frame.setContentPane(contentPane);
 
-        frame.setSize(_dim);
-        contentPane.setSize(_dim);
+        frame.setSize(Example.SIZE);
+        contentPane.setSize(Example.SIZE);
 
         final Stage stage = new Stage(contentPane) {
-            int _acts = 0;
+            int acts = 0;
 
             private void init() {
                 this.setImage();
 
-                doAdd();
+                this.doAdd();
             }
 
             private void doAdd() {
                 final StagedActor actor = new StagedActor() {
-                    int _acts = 0;
+                    int acts = 0;
 
                     private void init() {
                         this.setImage();
@@ -43,31 +43,35 @@ public class Example {
                         g2d.setColor(Color.WHITE);
                         g2d.fillRect(0, 0, 40, 100);
 
-                        setAnimation(new SimpleAnimation(Animation.NO_TRANS, image));
+                        this.setAnimation(new SimpleAnimation(Animation.NO_TRANS, image));
                     }
 
+                    @Override
                     public void act() {
-                        if(this._acts == 0) init();
-                        setAngle(getAngle() + 1);
-                        this._acts++;
+                        if (this.acts == 0) this.init();
+                        this.setAngle(this.getAngle() + 1);
+                        this.acts++;
                     }
                 };
-                addActor(actor, 800, 300);
+                this.addActor(actor, 0, 0);
             }
 
             private void setImage() {
-                final BufferedImage image = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+                final BufferedImage image = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_ARGB);
 
                 final Graphics2D g2d = image.createGraphics();
                 g2d.setColor(Color.RED);
-                g2d.fillRect(0, 0, getWidth(), getHeight());
+                g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
 
-                setAnimation(new SimpleAnimation(Animation.NO_TRANS, image));
+                this.setAnimation(new SimpleAnimation(Animation.NO_TRANS, image));
             }
 
+            @Override
             public void act() {
-                if(this._acts == 0) init();
-                this._acts++;
+                if (this.acts == 0) {
+                    this.init();
+                }
+                this.acts++;
             }
         };
 
