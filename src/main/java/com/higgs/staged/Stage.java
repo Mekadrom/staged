@@ -44,7 +44,7 @@ public abstract class Stage implements MouseReactant, KeyReactant {
         this.height = height;
     }
 
-    public void addActor(final StagedActor actor, final int x, final int y) {
+    public void addActor(final StagedActor actor, final double x, final double y) {
         if (!this.actors.contains(actor)) {
             this.actors.add(actor);
         }
@@ -86,7 +86,7 @@ public abstract class Stage implements MouseReactant, KeyReactant {
         return result;
     }
 
-    public ArrayList<StagedActor> getActorsInRange(final int x, final int y, final double range) {
+    public ArrayList<StagedActor> getActorsInRange(final double x, final double y, final double range) {
         final ArrayList<StagedActor> result = new ArrayList<>();
         for (final StagedActor actor : this.actors) {
             if (actor != null) {
