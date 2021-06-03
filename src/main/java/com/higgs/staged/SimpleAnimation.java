@@ -37,13 +37,14 @@ public class SimpleAnimation implements Animation {
     public void nextFrame() {
         if (this.frames != null) {
             this.smoothCount++;
-            if (this.smoothness != Animation.NO_TRANS) {
+            if (this.smoothness == Animation.NO_TRANS) {
+                this.incFrame(1);
+                this.smoothCount = 0;
+            } else {
                 if (this.smoothCount >= this.smoothness) {
                     this.incFrame(1);
                     this.smoothCount = 0;
                 }
-            } else {
-                this.incFrame(1);
             }
         }
     }

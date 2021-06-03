@@ -53,7 +53,7 @@ public final class Example {
                         this.acts++;
                     }
                 };
-                this.addActor(actor, 0, 0);
+                this.addActor(actor, 100, 100);
             }
 
             private void setImage() {

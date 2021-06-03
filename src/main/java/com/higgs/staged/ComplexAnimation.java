@@ -29,13 +29,13 @@ public class ComplexAnimation extends SimpleAnimation {
     public void nextFrame() {
         if (this.frames != null) {
             this.smoothnessCounters[this.frame]++;
-            if (this.smoothnesses[this.frame] != Animation.NO_TRANS) {
+            if (this.smoothnesses[this.frame] == Animation.NO_TRANS) {
+                this.incFrame(1);
+            } else {
                 if (this.smoothnessCounters[this.frame] >= this.smoothnesses[this.frame]) {
                     this.incFrame(1);
                     this.smoothnessCounters[this.frame] = 0;
                 }
-            } else {
-                this.incFrame(1);
             }
         }
     }
