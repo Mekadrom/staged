@@ -32,7 +32,9 @@ public class StagedPanel extends JPanel {
                 if (StagedPanel.this.stage != null) {
                     StagedPanel.this.stage.keyInput(e, type);
                     for (final StagedActor actor : StagedPanel.this.stage.getActors()) {
-                        if (e.isConsumed()) break;
+                        if (e.isConsumed()) {
+                            break;
+                        }
                         actor.keyInput(e, type);
                     }
                 }
@@ -43,7 +45,9 @@ public class StagedPanel extends JPanel {
                 if (StagedPanel.this.stage != null) {
                     StagedPanel.this.stage.mouseInput(e, type);
                     for (final StagedActor actor : StagedPanel.this.stage.getActors()) {
-                        if (e.isConsumed()) break;
+                        if (e.isConsumed()) {
+                            break;
+                        }
                         actor.mouseInput(e, type);
                     }
                 }
@@ -95,10 +99,17 @@ public class StagedPanel extends JPanel {
             }
             int index = 0;
             for (final StagedActor actor : tempMap.keySet()) {
-                if (index < this.stage.getActors().size()) {
-                    if (this.stage.getActors().get(index) != null) actor.act();
+                if (this.stage.getToRemove().contains(actor)) {
+                    this.stage.getActors().remove(actor);
+                    this.stage.getToRemove().remove(actor);
                 } else {
-                    break;
+                    if (index < this.stage.getActors().size()) {
+                        if (this.stage.getActors().get(index) != null) {
+                            actor.act();
+                        }
+                    } else {
+                        break;
+                    }
                 }
                 index++;
             }

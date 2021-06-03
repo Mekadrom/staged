@@ -14,9 +14,7 @@ public abstract class Stage implements MouseReactant, KeyReactant {
 
     private Animation animation;
 
-    public void act() {
-        this.toRemove.forEach(this.actors::remove);
-    }
+    public abstract void act();
 
     @Override
     public void keyInput(final KeyEvent e, final InputListener.EnumKeyInputType type) {
@@ -58,6 +56,10 @@ public abstract class Stage implements MouseReactant, KeyReactant {
 
     public void markForDelete(final StagedActor actor) {
         this.toRemove.add(actor);
+    }
+
+    public Set<StagedActor> getToRemove() {
+        return this.toRemove;
     }
 
     public int getWidth() {
