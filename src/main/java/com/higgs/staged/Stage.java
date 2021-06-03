@@ -4,14 +4,19 @@ import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public abstract class Stage implements MouseReactant, KeyReactant {
-    private final List<StagedActor> _actors = new ArrayList<>();
+    private final List<StagedActor> actors = new ArrayList<>();
+    private final Set<StagedActor> toRemove = new HashSet<>();
 
-    private Animation _animation;
+    private Animation animation;
 
-    public abstract void act();
+    public void act() {
+        this.toRemove.forEach(this.actors::remove);
+    }
 
     @Override
     public void keyInput(final KeyEvent e, final InputListener.EnumKeyInputType type) {
@@ -40,19 +45,19 @@ public abstract class Stage implements MouseReactant, KeyReactant {
     }
 
     public void addActor(final StagedActor actor, final int x, final int y) {
-        if (!this._actors.contains(actor)) {
-            this._actors.add(actor);
+        if (!this.actors.contains(actor)) {
+            this.actors.add(actor);
         }
         actor.setLocation(x, y);
         actor.setStage(this);
     }
 
     public List<StagedActor> getActors() {
-        return this._actors;
+        return this.actors;
     }
 
-    public void removeActor(final StagedActor actor) {
-        this._actors.remove(actor);
+    public void markForDelete(final StagedActor actor) {
+        this.toRemove.add(actor);
     }
 
     public int getWidth() {
@@ -64,16 +69,16 @@ public abstract class Stage implements MouseReactant, KeyReactant {
     }
 
     public void setAnimation(final Animation animation) {
-        this._animation = animation;
+        this.animation = animation;
     }
 
     public Animation getAnimation() {
-        return this._animation;
+        return this.animation;
     }
 
     public ArrayList<StagedActor> getActorsAt(final double x, final double y) {
         final ArrayList<StagedActor> result = new ArrayList<>();
-        for (final StagedActor actor : this._actors) {
+        for (final StagedActor actor : this.actors) {
             if (actor.getX() == x && actor.getY() == y) {
                 result.add(actor);
             }
@@ -83,7 +88,7 @@ public abstract class Stage implements MouseReactant, KeyReactant {
 
     public ArrayList<StagedActor> getActorsInRange(final int x, final int y, final double range) {
         final ArrayList<StagedActor> result = new ArrayList<>();
-        for (final StagedActor actor : this._actors) {
+        for (final StagedActor actor : this.actors) {
             if (actor != null) {
                 if (StageUtils.dist(x, y, actor.getX(), actor.getY()) <= range) {
                     result.add(actor);
@@ -95,7 +100,7 @@ public abstract class Stage implements MouseReactant, KeyReactant {
 
     public ArrayList<StagedActor> getActorsInRange(final StagedActor posA, final double range) {
         final ArrayList<StagedActor> result = new ArrayList<>();
-        for (final StagedActor actor : this._actors) {
+        for (final StagedActor actor : this.actors) {
             if (actor != null) {
                 if (actor != posA) {
                     if (StageUtils.dist(posA.getX(), posA.getY(), actor.getX(), actor.getY()) <= range) {
