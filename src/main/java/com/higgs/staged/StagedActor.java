@@ -1,5 +1,7 @@
 package com.higgs.staged;
 
+import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -7,8 +9,8 @@ import java.awt.image.BufferedImage;
 import java.util.Optional;
 
 public abstract class StagedActor implements MouseReactant, KeyReactant {
-    private int x;
-    private int y;
+    private double x;
+    private double y;
     private double theta;
 
     private Animation animation;
@@ -57,7 +59,7 @@ public abstract class StagedActor implements MouseReactant, KeyReactant {
         this.x = x;
     }
 
-    public int getX() {
+    public double getX() {
         return this.x;
     }
 
@@ -65,7 +67,7 @@ public abstract class StagedActor implements MouseReactant, KeyReactant {
         this.y = y;
     }
 
-    public int getY() {
+    public double getY() {
         return this.y;
     }
 
@@ -82,8 +84,8 @@ public abstract class StagedActor implements MouseReactant, KeyReactant {
         this.y = y;
     }
 
-    public Point getLocation() {
-        return new Point(this.x, this.y);
+    public Vector2D getLocation() {
+        return new Vector2D(this.x, this.y);
     }
 
     public int getRadius() {

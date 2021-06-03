@@ -138,15 +138,15 @@ public class StagedPanel extends JPanel {
                         final BufferedImage rot = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
 
                         final double rads = Math.toRadians(actor.getAngle());
-                        final int x = actor.getX() - (rot.getWidth() / 2);
-                        final int y = actor.getY() - (rot.getHeight() / 2);
+                        final double x = actor.getX() - (rot.getWidth() / 2.0);
+                        final double y = actor.getY() - (rot.getHeight() / 2.0);
 
                         final Graphics2D g2d = rot.createGraphics();
                         g2d.rotate(rads, (double) rot.getWidth() / 2, (double) rot.getHeight() / 2);
                         g2d.drawImage(preRot, (rot.getWidth() / 2) - (preRot.getWidth() / 2), (rot.getHeight() / 2) - (preRot.getHeight() / 2), null);
                         g2d.dispose();
 
-                        g.drawImage(rot, x, y, null);
+                        g.drawImage(rot, (int) Math.round(x), (int) Math.round(y), null);
                     }
                 }
             }
