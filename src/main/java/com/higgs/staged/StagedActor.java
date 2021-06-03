@@ -79,7 +79,7 @@ public abstract class StagedActor implements MouseReactant, KeyReactant {
         return this.theta;
     }
 
-    public void setLocation(final int x, final int y) {
+    public void setLocation(final double x, final double y) {
         this.x = x;
         this.y = y;
     }
