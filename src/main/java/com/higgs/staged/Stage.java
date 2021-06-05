@@ -55,7 +55,10 @@ public abstract class Stage implements MouseReactant, KeyReactant {
     }
 
     public void markForDelete(final StagedActor actor) {
-        this.toRemove.add(actor);
+        if (actor != null) {
+            this.toRemove.add(actor);
+            actor.setMarkedForDelete(true);
+        }
     }
 
     public Set<StagedActor> getToRemove() {

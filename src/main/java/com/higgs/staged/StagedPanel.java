@@ -104,7 +104,7 @@ public class StagedPanel extends JPanel {
                     this.stage.getToRemove().remove(actor);
                 } else {
                     if (index < this.stage.getActors().size()) {
-                        if (this.stage.getActors().get(index) != null) {
+                        if (this.stage.getActors().get(index) != null && !actor.isMarkedForDelete()) {
                             actor.act();
                         }
                     } else {

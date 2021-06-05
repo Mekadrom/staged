@@ -16,6 +16,7 @@ public abstract class StagedActor implements MouseReactant, KeyReactant {
     private Animation animation;
     private Stage stage;
 
+    private boolean isMarkedForDelete;
     
     public abstract void act();
 
@@ -97,5 +98,13 @@ public abstract class StagedActor implements MouseReactant, KeyReactant {
             radius = (int) (((double) width + (double) height) / 4.0);
         }
         return radius;
+    }
+
+    public boolean isMarkedForDelete() {
+        return this.isMarkedForDelete;
+    }
+
+    public void setMarkedForDelete(final boolean markedForDelete) {
+        this.isMarkedForDelete = markedForDelete;
     }
 }
