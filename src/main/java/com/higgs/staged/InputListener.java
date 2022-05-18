@@ -4,10 +4,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
-public abstract class InputListener implements MouseListener, KeyListener {
+public abstract class InputListener implements MouseListener, KeyListener, MouseMotionListener {
     public enum EnumMouseInputType {
-        CLICKED, PRESSED, RELEASED, ENTERED, EXITED
+        CLICKED, PRESSED, RELEASED, ENTERED, EXITED, DRAGGED, MOVED
     }
 
     public enum EnumKeyInputType {
@@ -54,6 +55,16 @@ public abstract class InputListener implements MouseListener, KeyListener {
     @Override
     public void mouseExited(final MouseEvent e) {
         this.mouse(e, EnumMouseInputType.EXITED);
+    }
+
+    @Override
+    public void mouseDragged(final MouseEvent e) {
+        this.mouse(e, EnumMouseInputType.DRAGGED);
+    }
+
+    @Override
+    public void mouseMoved(final MouseEvent e) {
+        this.mouse(e, EnumMouseInputType.MOVED);
     }
 
     public abstract void mouse(MouseEvent e, final EnumMouseInputType type);
